@@ -20,6 +20,18 @@ return {
 			-- Default sources included in blink.cmp
 			sources = {
 				default = { "lsp", "path", "snippets", "buffer" },
+				providers = {
+					buffer = {
+						opts = {
+							-- Instructs blink to scan all loaded buffers
+							get_bufnrs = function()
+								return vim.tbl_filter(function(bufnr)
+									return vim.api.nvim_buf_is_loaded(bufnr)
+								end, vim.api.nvim_list_bufs())
+							end,
+						},
+					},
+				},
 			},
 
 			-- Enable documentation and ghost text
